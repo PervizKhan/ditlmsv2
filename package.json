@@ -1,0 +1,38 @@
+{
+  "name": "lms-new",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --no-lint",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.10.0",
+    "clsx": "^2.1.1",
+    "jose": "^6.2.3",
+    "mongodb": "^7.2.0",
+    "mongoose": "^9.6.1",
+    "next": "14.2.35",
+    "next-cloudinary": "^6.17.5",
+    "nodemailer": "^8.0.7",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwind-merge": "^3.5.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20",
+    "@types/nodemailer": "^8.0.0",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
