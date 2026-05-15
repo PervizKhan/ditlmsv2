@@ -65,8 +65,12 @@ export default function DashboardLayout({
         </button>
       </div>
 
-      {/* Sidebar */}
-      <Sidebar userRole={userRole} mobileOpen={mobileMenuOpen} setMobileOpen={setMobileMenuOpen} />
+      {/* Sidebar with all functionality links */}
+      <Sidebar 
+        userRole={userRole} 
+        mobileOpen={mobileMenuOpen} 
+        setMobileOpen={setMobileMenuOpen} 
+      />
 
       {/* Main Content - margin will be handled by Sidebar component via CSS */}
       <main className="main-content min-h-screen pt-16 md:pt-0">

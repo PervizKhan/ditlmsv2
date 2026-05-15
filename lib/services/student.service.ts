@@ -1,5 +1,3 @@
-// lib/services/student.service.ts
-
 import { UserRepository } from '../repositories/user.repository';
 import { CourseRepository } from '../repositories/course.repository';
 import { Result, ok, err } from '../core/result';
@@ -15,13 +13,36 @@ export const StudentService = {
       id: student._id,
       name: student.name,
       email: student.email,
-      studentId: student.studentId,
-      fatherName: student.fatherName,
+      studentId: student.studentId || '',
+      fatherName: student.fatherName || '',
+      program: student.program || '',
+      parentEmail: student.parentEmail || '',
+      phone: student.phone || '',
+      address: student.address || '',
       enrollmentYear: student.enrollmentYear,
-      program: student.program,
       cgpa: student.cgpa || 0,
       totalCredits: student.totalCredits || 0,
     });
+  },
+
+  async getAllStudents(): Promise<Result<any[]>> {
+    const users = await UserRepository.getAll();
+    const students = users.filter(user => user.role === 'student');
+    
+    return ok(students.map(student => ({
+      id: student._id,
+      name: student.name,
+      email: student.email,
+      studentId: student.studentId || '',
+      fatherName: student.fatherName || '',
+      program: student.program || '',
+      parentEmail: student.parentEmail || '',
+      phone: student.phone || '',
+      address: student.address || '',
+      enrollmentYear: student.enrollmentYear,
+      cgpa: student.cgpa || 0,
+      totalCredits: student.totalCredits || 0,
+    })));
   },
 
   async getStudentTranscript(studentId: string): Promise<Result<any>> {

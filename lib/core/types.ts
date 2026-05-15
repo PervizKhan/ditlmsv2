@@ -13,6 +13,7 @@ export interface User {
   // New profile fields
   studentId?: string;
   fatherName?: string;
+  parentEmail?: string;
   cnic?: string;
   address?: string;
   profilePicture?: string;
@@ -49,4 +50,20 @@ export interface Enrollment {
   currentSemester: string;
   academicYear: string;
   status: 'active' | 'withdrawn' | 'graduated' | 'suspended';
+}
+
+// Add these to your existing types
+
+export interface Certificate {
+  id: string;
+  studentId: string;
+  studentName: string;
+  courseName: string;
+  courseCode: string;
+  grade: string;
+  percentage: number;
+  issueDate: Date;
+  certificateId: string;
+  downloadCount: number;
+  fatherName: string;
 }

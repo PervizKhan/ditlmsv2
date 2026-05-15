@@ -21,7 +21,7 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
     const checkDesktop = () => {
       setIsDesktop(window.innerWidth >= 768);
     };
-    
+
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
     return () => window.removeEventListener('resize', checkDesktop);
@@ -41,20 +41,25 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
     localStorage.setItem('sidebarCollapsed', String(newState));
   };
 
-  const navItems = {
-    student: [
-      { href: '/dashboard', icon: '🏠', label: 'Dashboard' },
-      { href: '/dashboard/transcript', icon: '📚', label: 'Transcript' },
-      { href: '/dashboard/profile', icon: '👤', label: 'Profile' },
-    ],
-    admin: [
-      { href: '/dashboard/admin', icon: '👥', label: 'Users' },
-      { href: '/dashboard/admin/transcript', icon: '📚', label: 'Transcripts' },
-      { href: '/dashboard/admin/profile', icon: '👤', label: 'Student Profiles' },
-    ],
-  };
+  // Student Navigation Items
+  const studentNavItems = [
+    { href: '/dashboard', icon: '🏠', label: 'Dashboard' },
+    { href: '/dashboard/transcript', icon: '📚', label: 'My Transcript' },
+    { href: '/dashboard/courses', icon: '📖', label: 'My Courses' },
+    { href: '/dashboard/grades', icon: '📊', label: 'My Grades' },
+    { href: '/dashboard/certificates', icon: '📜', label: 'My Certificates' },
+    { href: '/dashboard/profile', icon: '👤', label: 'My Profile' },
+  ];
 
-  const items = navItems[userRole];
+  // Admin Navigation Items
+  const adminNavItems = [
+    { href: '/dashboard/admin', icon: '👥', label: 'User Management' },
+    { href: '/dashboard/admin/profile', icon: '👤', label: 'Student Profiles' },
+    { href: '/dashboard/admin/transcript', icon: '📋', label: 'Manage Transcripts' },
+    { href: '/dashboard/admin/bulk-import', icon: '📥', label: 'Bulk Import' },
+    { href: '/dashboard/admin/certificates', icon: '📜', label: 'Leaving Certificate' },];
+
+  const navItems = userRole === 'admin' ? adminNavItems : studentNavItems;
   const sidebarWidth = isCollapsed && isDesktop ? 'w-20' : 'w-64';
 
   return (
@@ -69,9 +74,8 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full ${sidebarWidth} z-50 transition-all duration-300 ${
-          mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        }`}
+        className={`fixed top-0 left-0 h-full ${sidebarWidth} z-50 transition-all duration-300 ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+          }`}
         style={{ background: 'var(--surface)', borderRight: '1px solid var(--border)' }}
       >
         {/* Header with Collapse Button */}
@@ -101,18 +105,17 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
         {/* Navigation */}
         <nav className="p-4">
           <ul className="space-y-2">
-            {items.map((item) => {
+            {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 p-3 rounded-lg transition ${
-                      isActive
+                    className={`flex items-center gap-3 p-3 rounded-lg transition ${isActive
                         ? 'bg-accent text-primary font-medium'
                         : 'hover:bg-opacity-10 hover:bg-gray-500'
-                    }`}
+                      }`}
                     style={isActive ? { background: 'var(--accent)', color: '#0b1f3a' } : {}}
                     title={isCollapsed && isDesktop ? item.label : undefined}
                   >

@@ -1,5 +1,3 @@
-// lib/repositories/user.repository.ts
-
 import mongoose, { Schema, Model } from 'mongoose';
 import { User } from '../core/types';
 import { connectDB } from './db';
@@ -20,6 +18,7 @@ const UserSchema = new Schema<UserDocument>(
     // New profile fields
     studentId: { type: String, unique: true, sparse: true },
     fatherName: { type: String, default: '' },
+    parentEmail: { type: String, default: '' },
     cnic: { type: String, unique: true, sparse: true },
     address: { type: String, default: '' },
     profilePicture: { type: String, default: '' },
@@ -45,15 +44,33 @@ export const UserRepository = {
     return UserModel.findOne({ email });
   },
 
-  // Add this method to UserRepository
-async findById(id: string): Promise<UserDocument | null> {
-  await connectDB();
-  return UserModel.findById(id);
-},
+  async findById(id: string): Promise<UserDocument | null> {
+    await connectDB();
+    return UserModel.findById(id);
+  },
 
   async create(data: Partial<User>): Promise<UserDocument> {
     await connectDB();
-    return UserModel.create(data);
+    return UserModel.create({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      role: data.role || 'student',
+      isVerified: data.isVerified || false,
+      studentId: data.studentId || '',
+      fatherName: data.fatherName || '',
+      parentEmail: data.parentEmail || '',
+      cnic: data.cnic || '',
+      address: data.address || '',
+      profilePicture: data.profilePicture || '',
+      phone: data.phone || '',
+      dateOfBirth: data.dateOfBirth || '',
+      gender: data.gender || 'male',
+      enrollmentYear: data.enrollmentYear,
+      program: data.program || '',
+      cgpa: data.cgpa || 0,
+      totalCredits: data.totalCredits || 0,
+    });
   },
 
   async verifyUser(email: string): Promise<void> {
@@ -76,7 +93,7 @@ async findById(id: string): Promise<UserDocument | null> {
     await UserModel.deleteOne({ email });
   },
 
-  // ✅ NEW OTP METHODS
+  // OTP METHODS
   async saveOTP(email: string, otp: string, expiresAt: Date): Promise<void> {
     await connectDB();
     await UserModel.updateOne({ email }, { otp, otpExpiresAt: expiresAt });
@@ -97,26 +114,23 @@ async findById(id: string): Promise<UserDocument | null> {
     await UserModel.updateOne({ email }, { otp: null, otpExpiresAt: null });
   },
 
-async updateProfile(userId: string, profileData: Partial<User>): Promise<void> {
-  await connectDB();
-  await UserModel.updateOne({ _id: userId }, profileData);
-},
+  async updateProfile(userId: string, profileData: Partial<User>): Promise<void> {
+    await connectDB();
+    await UserModel.updateOne({ _id: userId }, profileData);
+  },
 
-async getUserProfile(userId: string): Promise<UserDocument | null> {
-  await connectDB();
-  return UserModel.findById(userId).select('-password -otp -otpExpiresAt');
-},
-  // Add to UserRepository
+  async getUserProfile(userId: string): Promise<UserDocument | null> {
+    await connectDB();
+    return UserModel.findById(userId).select('-password -otp -otpExpiresAt');
+  },
 
+  async updateAcademicInfo(userId: string, data: any): Promise<void> {
+    await connectDB();
+    await UserModel.updateOne({ _id: userId }, data);
+  },
 
-
-async updateAcademicInfo(userId: string, data: any): Promise<void> {
-  await connectDB();
-  await UserModel.updateOne({ _id: userId }, data);
-},
-
-async updateStudentId(email: string, studentId: string): Promise<void> {
-  await connectDB();
-  await UserModel.updateOne({ email }, { studentId });
-},
+  async updateStudentId(email: string, studentId: string): Promise<void> {
+    await connectDB();
+    await UserModel.updateOne({ email }, { studentId });
+  },
 };
