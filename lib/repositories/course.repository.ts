@@ -1,66 +1,68 @@
-// lib/repositories/course.repository.ts
-
 import mongoose, { Schema, Model } from 'mongoose';
-import { Course, Enrollment } from '../core/types';
+import { Course } from '../core/types';
 import { connectDB } from './db';
 
-interface CourseDocument extends Omit<Course, '_id'>, mongoose.Document {}
-interface EnrollmentDocument extends Omit<Enrollment, '_id' | 'studentId'>, mongoose.Document {
-  studentId: mongoose.Types.ObjectId;
+interface CourseDocument extends Document {
+  code: string;
+  title: string;
+  credits: number;
+  program: string;
+  semester: string;
+  department?: string;
 }
 
 const CourseSchema = new Schema<CourseDocument>({
-  code: { type: String, required: true },
+  code: { type: String, required: true, unique: true },
   title: { type: String, required: true },
-  credits: { type: Number, required: true },
-  grade: { type: String, required: true },
-  gp: { type: Number, required: true },
+  credits: { type: Number, required: true, default: 3 },
+  program: { type: String, required: true },
   semester: { type: String, required: true },
-  semesterCode: { type: String, required: true },
-  year: { type: Number, required: true },
-  remarks: { type: String },
+  department: { type: String },
 }, { timestamps: true });
 
-const EnrollmentSchema = new Schema<EnrollmentDocument>({
-  studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  courses: [CourseSchema],
-  currentSemester: { type: String, required: true },
-  academicYear: { type: String, required: true },
-  status: { type: String, enum: ['active', 'withdrawn', 'graduated', 'suspended'], default: 'active' },
-}, { timestamps: true });
-
-const CourseModel: Model<CourseDocument> = mongoose.models.Course || mongoose.model<CourseDocument>('Course', CourseSchema);
-const EnrollmentModel: Model<EnrollmentDocument> = mongoose.models.Enrollment || mongoose.model<EnrollmentDocument>('Enrollment', EnrollmentSchema);
+const CourseModel: Model<CourseDocument> =
+  mongoose.models.Course || mongoose.model<CourseDocument>('Course', CourseSchema);
 
 export const CourseRepository = {
-  async createEnrollment(data: Partial<Enrollment>): Promise<EnrollmentDocument> {
+  async create(data: Partial<Course>): Promise<CourseDocument> {
     await connectDB();
-    return EnrollmentModel.create(data);
+    return CourseModel.create({
+      code: data.code,
+      title: data.title,
+      credits: data.credits || 3,
+      program: data.program,
+      semester: data.semester,
+      department: data.department,
+    });
   },
 
-  async getEnrollmentByStudentId(studentId: string): Promise<EnrollmentDocument | null> {
+  async findAll(): Promise<CourseDocument[]> {
     await connectDB();
-    return EnrollmentModel.findOne({ studentId }).populate('studentId');
+    return CourseModel.find().sort({ program: 1, semester: 1, code: 1 });
   },
 
-  async updateEnrollment(studentId: string, data: Partial<Enrollment>): Promise<void> {
+  async findByProgram(program: string): Promise<CourseDocument[]> {
     await connectDB();
-    await EnrollmentModel.updateOne({ studentId }, data);
+    return CourseModel.find({ program }).sort({ semester: 1, code: 1 });
   },
 
-  async addCourse(studentId: string, course: Course): Promise<void> {
+  async findBySemester(program: string, semester: string): Promise<CourseDocument[]> {
     await connectDB();
-    await EnrollmentModel.updateOne(
-      { studentId },
-      { $push: { courses: course } }
-    );
+    return CourseModel.find({ program, semester });
   },
 
-  async updateCourseGrade(studentId: string, courseCode: string, grade: string, gp: number): Promise<void> {
+  async findById(id: string): Promise<CourseDocument | null> {
     await connectDB();
-    await EnrollmentModel.updateOne(
-      { studentId, 'courses.code': courseCode },
-      { $set: { 'courses.$.grade': grade, 'courses.$.gp': gp } }
-    );
+    return CourseModel.findById(id);
+  },
+
+  async update(id: string, data: Partial<Course>): Promise<CourseDocument | null> {
+    await connectDB();
+    return CourseModel.findByIdAndUpdate(id, data, { new: true });
+  },
+
+  async delete(id: string): Promise<void> {
+    await connectDB();
+    await CourseModel.findByIdAndDelete(id);
   },
 };

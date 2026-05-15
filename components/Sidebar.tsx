@@ -57,7 +57,18 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
     { href: '/dashboard/admin/profile', icon: '👤', label: 'Student Profiles' },
     { href: '/dashboard/admin/transcript', icon: '📋', label: 'Manage Transcripts' },
     { href: '/dashboard/admin/bulk-import', icon: '📥', label: 'Bulk Import' },
-    { href: '/dashboard/admin/certificates', icon: '📜', label: 'Leaving Certificate' },];
+    { href: '/dashboard/admin/certificates', icon: '📜', label: 'Leaving Certificate' },
+    
+
+    // NEW LINKS FOR EXAM SYSTEM
+    { href: '/dashboard/admin/courses', icon: '📚', label: 'Course Management' },
+    { href: '/dashboard/admin/exams', icon: '📝', label: 'Exam Marks Entry' },
+    { href: '/dashboard/admin/exam-list', icon: '📅', label: 'Exam Management' },
+    { href: '/dashboard/admin/dmc', icon: '📊', label: 'Generate DMCs' },
+    { href: '/dashboard/admin/dmc-list', icon: '📜', label: 'DMC List' },
+  ];
+
+
 
   const navItems = userRole === 'admin' ? adminNavItems : studentNavItems;
   const sidebarWidth = isCollapsed && isDesktop ? 'w-20' : 'w-64';
@@ -82,12 +93,12 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
         <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: 'var(--border)' }}>
           {(!isCollapsed || !isDesktop) && (
             <span className="text-xl font-bold" style={{ color: 'var(--accent)' }}>
-              DIT Portal
+              OXFORD Portal
             </span>
           )}
           {isCollapsed && isDesktop && (
             <span className="text-xl font-bold mx-auto" style={{ color: 'var(--accent)' }}>
-              DP
+              OP
             </span>
           )}
           {/* Collapse Button - Only on desktop */}
@@ -113,8 +124,8 @@ export function Sidebar({ userRole, mobileOpen, setMobileOpen }: SidebarProps) {
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
                     className={`flex items-center gap-3 p-3 rounded-lg transition ${isActive
-                        ? 'bg-accent text-primary font-medium'
-                        : 'hover:bg-opacity-10 hover:bg-gray-500'
+                      ? 'bg-accent text-primary font-medium'
+                      : 'hover:bg-opacity-10 hover:bg-gray-500'
                       }`}
                     style={isActive ? { background: 'var(--accent)', color: '#0b1f3a' } : {}}
                     title={isCollapsed && isDesktop ? item.label : undefined}

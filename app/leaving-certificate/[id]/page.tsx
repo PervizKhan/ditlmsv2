@@ -60,55 +60,173 @@ export default function LeavingCertificatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8 print:bg-white print:p-0">
-      <div className="max-w-4xl mx-auto print:max-w-none">
-        <div className="relative bg-white shadow-2xl print:shadow-none" style={{ border: '15px solid #d4af37', borderRadius: '20px' }}>
-          <div className="absolute top-4 left-4 right-4 bottom-4 border-2 border-double border-yellow-600 pointer-events-none" style={{ borderRadius: '12px' }} />
+    <div className="min-h-screen bg-gray-200 p-8 print:bg-white print:p-0">
+      <div className="max-w-5xl mx-auto print:max-w-none">
+        <div className="relative bg-white shadow-2xl print:shadow-none" style={{ 
+          width: '100%', 
+          minHeight: '650px',
+          background: 'linear-gradient(135deg, #ffffff 0%, #fef9e6 100%)',
+          border: '10px solid #d4af37',
+          borderRadius: '20px',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
           
-          <div className="p-12 print:p-8">
+          {/* Corner Graphics */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '120px',
+            height: '120px',
+            background: 'linear-gradient(135deg, #0b1f3a 0%, #1a4a6e 50%, #d4af37 100%)',
+            clipPath: 'polygon(0 0, 100% 0, 0 100%)',
+            opacity: 0.9
+          }} />
+          
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '120px',
+            height: '120px',
+            background: 'linear-gradient(225deg, #0b1f3a 0%, #1a4a6e 50%, #d4af37 100%)',
+            clipPath: 'polygon(100% 0, 100% 100%, 0 0)',
+            opacity: 0.9
+          }} />
+          
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            width: '120px',
+            height: '120px',
+            background: 'linear-gradient(45deg, #d4af37 0%, #1a4a6e 50%, #0b1f3a 100%)',
+            clipPath: 'polygon(0 100%, 100% 100%, 0 0)',
+            opacity: 0.9
+          }} />
+          
+          <div style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            width: '120px',
+            height: '120px',
+            background: 'linear-gradient(315deg, #d4af37 0%, #1a4a6e 50%, #0b1f3a 100%)',
+            clipPath: 'polygon(100% 100%, 100% 0, 0 100%)',
+            opacity: 0.9
+          }} />
+
+          {/* Border Lines */}
+          <div style={{
+            position: 'absolute',
+            top: 20,
+            left: 20,
+            right: 20,
+            bottom: 20,
+            border: '2px solid rgba(212, 175, 55, 0.3)',
+            borderRadius: '12px',
+            pointerEvents: 'none'
+          }} />
+          
+          <div style={{
+            position: 'absolute',
+            top: 25,
+            left: 25,
+            right: 25,
+            bottom: 25,
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            borderRadius: '10px',
+            pointerEvents: 'none'
+          }} />
+
+          {/* Main Content */}
+          <div className="p-12 print:p-8" style={{ position: 'relative', zIndex: 2 }}>
             
-            {/* Header */}
-            <div className="text-center mb-6">
-              <div className="text-6xl mb-2">🏫</div>
-              <div className="text-3xl font-bold text-blue-900">Oxford Public School & College</div>
-              <div className="text-md font-semibold text-gray-700">TSD Dara Adam Khel</div>
-              <div className="text-sm text-gray-500">(Affiliated with BISE Kohat)</div>
-              <div className="w-24 h-0.5 bg-yellow-600 mx-auto my-3"></div>
+            {/* Top Decoration */}
+            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+              <div style={{ 
+                display: 'inline-block',
+                width: '60px',
+                height: '2px',
+                background: 'linear-gradient(90deg, #d4af37, #0b1f3a, #d4af37)',
+                margin: '0 10px'
+              }} />
+              <span style={{ fontSize: '28px' }}>🎓</span>
+              <div style={{ 
+                display: 'inline-block',
+                width: '60px',
+                height: '2px',
+                background: 'linear-gradient(90deg, #d4af37, #0b1f3a, #d4af37)',
+                margin: '0 10px'
+              }} />
             </div>
             
-            {/* Title */}
-            <div className="text-center my-8">
-              <div className="text-4xl font-serif text-yellow-700">SCHOOL LEAVING</div>
-              <div className="text-2xl font-serif text-yellow-600">CERTIFICATE</div>
+            {/* School Header */}
+            <div className="text-center mb-4">
+              <div className="text-4xl font-serif font-bold text-blue-900 tracking-wide">Oxford Public School & College</div>
+              <div className="text-md font-serif text-gray-600 mt-1">TSD Dara Adam Khel | Affiliated with BISE Kohat</div>
+            </div>
+            
+            {/* Gold Divider */}
+            <div style={{
+              height: '3px',
+              background: 'linear-gradient(90deg, transparent, #d4af37, #d4af37, #d4af37, transparent)',
+              width: '60%',
+              margin: '10px auto'
+            }} />
+            
+            {/* Certificate Title */}
+            <div className="text-center my-6">
+              <div className="text-5xl font-serif text-yellow-700 tracking-wider" style={{ 
+                textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
+                fontFamily: "'Georgia', 'Times New Roman', serif"
+              }}>SCHOOL LEAVING</div>
+              <div className="text-2xl font-serif text-yellow-600 tracking-wide">CERTIFICATE</div>
             </div>
             
             {/* Certificate Number */}
-            <div className="text-right text-sm mb-6">
-              <span className="font-semibold">Certificate No:</span> {certificate.certificateId}
+            <div className="text-right mb-4">
+              <div style={{
+                display: 'inline-block',
+                background: 'linear-gradient(135deg, #d4af37, #b8941e)',
+                padding: '4px 15px',
+                borderRadius: '20px',
+                color: '#0b1f3a',
+                fontWeight: 'bold',
+                fontSize: '11px'
+              }}>
+                Certificate No: {certificate.certificateId}
+              </div>
             </div>
             
-            {/* Body - Improved Formatting */}
-            <div className="leading-loose text-gray-800 space-y-3">
-              <p>This is to certify that <span className="font-bold text-lg text-blue-900">{certificate.studentName}</span></p>
+            {/* Certificate Body */}
+            <div className="text-justify text-gray-800" style={{ 
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+              fontSize: '16px',
+              lineHeight: '1.8'
+            }}>
+              <p style={{ marginBottom: '15px' }}>
+                This is to certify that <span className="font-bold text-xl text-blue-900">{certificate.studentName}</span>, 
+                Son/Daughter of <span className="font-semibold text-blue-800">{certificate.fatherName || '________'}</span>, 
+                was a bonafide student of this institution bearing Registration No. 
+                <span className="font-semibold ml-1">{certificate.studentIdNo || '________'}</span> 
+                in the program of <span className="font-semibold">{certificate.program || '________'}</span>.
+              </p>
               
-              <p>Son/Daughter of <span className="font-semibold">{certificate.fatherName || '________'}</span></p>
-              
-              <p>was a bonafide student of this institution.</p>
-              
-              <p><span className="font-semibold">Registration No:</span> {certificate.studentIdNo || '________'}</p>
-              
-              <p><span className="font-semibold">Class:</span> {certificate.program || '________'}</p>
-              
-              <p>He/She left the school on <span className="font-semibold">{new Date(certificate.lastAttendanceDate).toLocaleDateString()}</span> due to <span className="font-semibold">{certificate.leavingReason}</span>.</p>
-              
-              <p>During his/her stay, conduct was <span className="font-semibold">{certificate.conduct}</span>.</p>
+              <p style={{ marginBottom: '15px' }}>
+                He/She left the school on <span className="font-semibold text-blue-700">{new Date(certificate.lastAttendanceDate).toLocaleDateString()}</span> 
+                due to <span className="font-semibold text-blue-700">{certificate.leavingReason}</span>. 
+                During his/her stay, conduct was <span className="font-semibold text-green-700">{certificate.conduct}</span>.
+              </p>
               
               {certificate.characterCertificate === 'Yes' && (
-                <p>He/She bears a good moral character and is recommended for further admission.</p>
-              )}
-              
-              {certificate.nextAdmissionClass && (
-                <p>Eligible for admission to <span className="font-semibold">{certificate.nextAdmissionClass}</span>.</p>
+                <p style={{ marginBottom: '15px' }}>
+                  He/She bears a good moral character and is recommended for further admission.
+                  {certificate.nextAdmissionClass && (
+                    <span> He/She is eligible for admission to <span className="font-semibold text-blue-700">{certificate.nextAdmissionClass}</span>.</span>
+                  )}
+                </p>
               )}
               
               {certificate.remarks && (
@@ -116,32 +234,44 @@ export default function LeavingCertificatePage() {
               )}
             </div>
             
-            {/* Signature Section */}
-            <div className="flex justify-between mt-12 pt-6">
-              <div className="text-center">
-                <div className="border-t-2 border-gray-400 pt-2 w-32">Date</div>
-                <div className="text-sm mt-1">{new Date(certificate.issueDate).toLocaleDateString()}</div>
+            {/* Signature Section - ENHANCED VISIBILITY */}
+            <div className="flex justify-between mt-10 pt-4">
+              <div className="text-center" style={{ flex: 1 }}>
+                <div style={{ borderTop: '2px solid #0b1f3a', width: '140px', margin: '0 auto', paddingTop: '6px' }} />
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#0b1f3a', marginTop: '6px' }}>DATE</div>
+                <div style={{ fontSize: '13px', fontWeight: 'bold', color: '#d4af37', marginTop: '2px' }}>
+                  {new Date(certificate.issueDate).toLocaleDateString()}
+                </div>
               </div>
-              <div className="text-center">
-                <div className="border-t-2 border-gray-400 pt-2 w-40">Principal's Signature</div>
-                <div className="text-sm mt-1">(Principal)</div>
+              
+              <div className="text-center" style={{ flex: 1 }}>
+                <div style={{ borderTop: '2px solid #0b1f3a', width: '180px', margin: '0 auto', paddingTop: '6px' }} />
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#0b1f3a', marginTop: '6px' }}>PRINCIPAL'S SIGNATURE</div>
+                <div style={{ fontSize: '12px', fontWeight: '500', color: '#1a4a6e', marginTop: '2px' }}>(Principal)</div>
               </div>
-              <div className="text-center">
-                <div className="border-t-2 border-gray-400 pt-2 w-24">Seal</div>
+              
+              <div className="text-center" style={{ flex: 1 }}>
+                <div style={{ borderTop: '2px solid #0b1f3a', width: '100px', margin: '0 auto', paddingTop: '6px' }} />
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#0b1f3a', marginTop: '6px' }}>SEAL</div>
+                <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#d4af37', marginTop: '2px' }}>Oxford Public School</div>
               </div>
             </div>
             
-            {/* Footer */}
-            <div className="text-center mt-8 pt-4 border-t border-gray-200">
-              <div className="text-xs text-gray-400">Oxford Public School & College, TSD Dara Adam Khel</div>
-              <div className="text-xs text-gray-400">Excellence in Education</div>
+            {/* Footer - ENHANCED VISIBILITY */}
+            <div className="text-center mt-6 pt-3 border-t border-gray-300">
+              <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#0b1f3a', letterSpacing: '0.5px' }}>
+                Oxford Public School & College, TSD Dara Adam Khel
+              </div>
+              <div style={{ fontSize: '11px', fontWeight: 'bold', color: '#d4af37', marginTop: '4px', fontStyle: 'italic' }}>
+                "Excellence in Education"
+              </div>
             </div>
           </div>
         </div>
         
         {/* Buttons */}
         <div className="flex justify-center gap-4 mt-6 print:hidden">
-          <button onClick={handlePrint} className="px-6 py-3 text-lg font-semibold rounded-lg" style={{ background: 'var(--accent)', color: '#0b1f3a' }}>
+          <button onClick={handlePrint} className="px-8 py-3 text-lg font-semibold rounded-lg" style={{ background: 'var(--accent)', color: '#0b1f3a' }}>
             🖨️ Save as PDF / Print
           </button>
           <button onClick={() => window.close()} className="px-6 py-3 text-lg font-semibold rounded-lg border" style={{ borderColor: 'var(--border)' }}>

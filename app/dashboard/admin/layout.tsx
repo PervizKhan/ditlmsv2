@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+
 import { usePathname } from 'next/navigation';
 
 export default function AdminLayout({
@@ -46,7 +46,7 @@ export default function AdminLayout({
   return (
     <div>
       {/* Admin Navigation Tabs - NO header, NO logout, NO theme toggle here */}
-      <div className="mb-6 pb-2 border-b" style={{ borderColor: 'var(--border)' }}>
+      {/* <div className="mb-6 pb-2 border-b" style={{ borderColor: 'var(--border)' }}>
         <div className="flex gap-2 md:gap-4 overflow-x-auto">
           <Link
             href="/dashboard/admin"
@@ -79,7 +79,7 @@ export default function AdminLayout({
             👤 Student Profiles
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* Page Content */}
       {children}

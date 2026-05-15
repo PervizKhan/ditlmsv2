@@ -133,6 +133,7 @@ async getUserById(userId: string): Promise<Result<any>> {
 
   return ok({
     _id: user._id.toString(),
+    name: user.name,  // ✅ Include name in response
     email: user.email,
     role: user.role,
     isVerified: user.isVerified,

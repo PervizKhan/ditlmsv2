@@ -23,7 +23,8 @@ export async function GET(req: NextRequest) {
       user: {
         userId: payload.userId,
         role: payload.role,
-        isVerified: payload.isVerified
+        isVerified: payload.isVerified,
+       
       }
     });
   } catch (error) {
