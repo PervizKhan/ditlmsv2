@@ -5,6 +5,8 @@ import { verifyToken } from '@/lib/utils/jwt';
 import { cookies } from 'next/headers';
 import { CourseRepository } from '@/lib/repositories/course.repository';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
     const cookieStore = await cookies();

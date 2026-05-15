@@ -5,6 +5,8 @@ import { verifyToken } from '@/lib/utils/jwt';
 import { cookies } from 'next/headers';
 import { UserRepository } from '@/lib/repositories/user.repository';
 
+export const dynamic = 'force-dynamic';
+
 export async function PUT(req: NextRequest) {
   try {
     const cookieStore = await cookies();

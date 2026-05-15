@@ -5,6 +5,8 @@ import { verifyToken } from '@/lib/utils/jwt';
 import { cookies } from 'next/headers';
 import { CourseRepository } from '@/lib/repositories/course.repository';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ studentId: string }> }

@@ -2,6 +2,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { EmailService } from '@/lib/services/email.service';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   // Only allow in development
   if (process.env.NODE_ENV === 'production') {

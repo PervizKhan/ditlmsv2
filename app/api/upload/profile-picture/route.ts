@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 import { v2 as cloudinary } from 'cloudinary';
 import { UserRepository } from '@/lib/repositories/user.repository';
 
+export const dynamic = 'force-dynamic';
+
 // Configure Cloudinary - THIS MUST COME BEFORE using cloudinary
 cloudinary.config({
   cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,

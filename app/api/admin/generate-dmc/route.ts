@@ -3,6 +3,8 @@ import { connectDB } from '@/lib/repositories/db';
 import { UserRepository } from '@/lib/repositories/user.repository';
 import { DMCRepository } from '@/lib/repositories/dmc.repository';
 
+export const dynamic = 'force-dynamic';
+
 interface SubjectInput {
   code: string;
   name: string;

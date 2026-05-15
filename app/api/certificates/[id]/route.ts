@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { CertificateService } from '@/lib/services/certificate.service';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     const result = await CertificateService.getCertificate(params.id);

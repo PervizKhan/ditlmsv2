@@ -5,6 +5,8 @@ import { verifyToken } from '@/lib/utils/jwt';
 import { cookies } from 'next/headers';
 import { StudentService } from '@/lib/services/student.service';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     const cookieStore = await cookies();
