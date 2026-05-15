@@ -52,6 +52,7 @@ export const CertificateRepository = {
     fatherName?: string;
     studentIdNo?: string;
     program?: string;
+    type?: 'leaving';
     leavingReason: string;
     lastAttendanceDate?: Date;
     conduct?: string;
@@ -60,6 +61,7 @@ export const CertificateRepository = {
     remarks?: string;
     certificateId: string;
     issueDate?: Date;
+    downloadCount?: number;
   }): Promise<CertificateDocument> {
     await connectDB();
     return CertificateModel.create({
@@ -77,7 +79,7 @@ export const CertificateRepository = {
       remarks: data.remarks || '',
       certificateId: data.certificateId,
       issueDate: data.issueDate || new Date(),
-      downloadCount: 0,
+      downloadCount: data.downloadCount || 0,
     });
   },
 

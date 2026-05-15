@@ -47,12 +47,22 @@ export default function LeavingCertificatePage() {
       console.log('Fetched students:', data);
       
       const studentList = data.filter((u: any) => u.role === 'student');
-      console.log('Filtered students:', studentList);
       
-      setStudents(studentList);
+      // Map the data to ensure all fields are present
+      const mappedStudents = studentList.map((student: any) => ({
+        _id: student._id || student.id,
+        name: student.name || '',
+        email: student.email || '',
+        studentId: student.studentId || '',
+        program: student.program || '',
+        fatherName: student.fatherName || '',
+      }));
+      
+      console.log('Mapped students:', mappedStudents);
+      setStudents(mappedStudents);
       
       // Extract unique classes/programs
-      const uniqueClasses = [...new Set(studentList.map((s: any) => s.program).filter(Boolean))] as string[];
+      const uniqueClasses = [...new Set(mappedStudents.map((s: any) => s.program).filter(Boolean))] as string[];
       setClasses(uniqueClasses);
     } catch (error) {
       console.error('Error fetching students:', error);
@@ -64,17 +74,22 @@ export default function LeavingCertificatePage() {
   const filterStudents = () => {
     let filtered = [...students];
     
-    if (selectedClass) {
-      filtered = filtered.filter(s => s.program === selectedClass);
+    // 1. Filter by Program/Class
+    if (selectedClass && selectedClass !== "") {
+      filtered = filtered.filter(s => 
+        s.program?.trim() === selectedClass.trim()
+      );
     }
     
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
+    // 2. Filter by Search Term
+    if (searchTerm.trim() !== "") {
+      const term = searchTerm.toLowerCase().trim();
       filtered = filtered.filter(s => {
-        const name = s.name?.toLowerCase() || '';
-        const studentId = s.studentId?.toLowerCase() || '';
-        const email = s.email?.toLowerCase() || '';
-        return name.includes(term) || studentId.includes(term) || email.includes(term);
+        return (
+          s.name?.toLowerCase().includes(term) ||
+          s.studentId?.toLowerCase().includes(term) ||
+          s.email?.toLowerCase().includes(term)
+        );
       });
     }
     

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { CertificateService } from '@/lib/services/certificate.service';
+import { connectDB } from '@/lib/repositories/db';
+import { CertificateRepository } from '@/lib/repositories/certificate.repository';
 
 export async function POST(req: NextRequest) {
   try {
@@ -32,28 +33,34 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'leavingReason is required' }, { status: 400 });
     }
 
-    const result = await CertificateService.generateLeavingCertificate({
+    await connectDB();
+
+    // Generate unique certificate ID
+    const certificateId = leavingCertificateNumber || `LC-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+
+    // Create certificate (type is set automatically in repository)
+    const certificate = await CertificateRepository.create({
       studentId,
       studentName,
-      fatherName,
-      studentIdNo,
-      program,
+      fatherName: fatherName || '',
+      studentIdNo: studentIdNo || '',
+      program: program || '',
       leavingReason,
       lastAttendanceDate: lastAttendanceDate ? new Date(lastAttendanceDate) : new Date(),
-      conduct,
-      characterCertificate,
-      nextAdmissionClass,
-      remarks,
-      certificateId: leavingCertificateNumber,
+      conduct: conduct || 'Good',
+      characterCertificate: characterCertificate || 'Yes',
+      nextAdmissionClass: nextAdmissionClass || '',
+      remarks: remarks || '',
+      certificateId,
+      issueDate: new Date(),
+      downloadCount: 0,
     });
 
-    if (!result.success) {
-      return NextResponse.json({ error: result.error }, { status: 400 });
-    }
+    console.log('Certificate created:', certificate._id);
 
     return NextResponse.json({ 
       success: true, 
-      certificate: { id: result.data.id } 
+      certificate: { id: certificate._id } 
     });
     
   } catch (error) {
